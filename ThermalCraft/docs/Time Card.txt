@@ -1,0 +1,20 @@
+Date				Hours			Work Details
+-----------			-----			------------
+11-Feb-2011				2			Researched and tested JExcelAPI, set up skeleton Swing application
+12-Feb-2011				2			Created Invoice template and conducted read/write test
+26-Feb-2011				8			Created layout for main screen, created parametrized strings
+27-Feb-2011				4			Created layout for details screen - tested transitions
+28-Feb-2011				3			Parsed replacable parameters, invoice test
+03-Mar-2011				2			Refactored internal data structures - fixed bugs in Invoice
+04-Mar-2011				1			Worked on Invoice template
+06-Mar-2011				1			Implemented file chooser dialog
+08-Mar-2011			  0.5			Worked on Proposal template
+10-Mar-2011			  0.5			Implemented error dialog
+18-Mar-2011			    3			Added section for Proposal, worked on Invoice template, Added Address fields
+19-Mar-2011				4			Worked on Invoice spreadsheet, Implemented most of Invoice generator
+20-Mar-2011				1.5			Added Invoice Number to sheet, Added set dialog via Options Menu
+
+
+					Total
+					-----
+					 32.0
