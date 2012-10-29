@@ -78,27 +78,18 @@
                 ===============
             -->
 
-    <target name="static-analysis" depends="checkstyle,findbugs"/>
+    <target name="static-analysis" depends="checkstyle,findbugs,pmd"/>
 
 
     <!-- Checkstyle -->
 
+
     <property name="checkstyle.home" value="/opt/COTS/defaults/checkstyle"/>
     <property name="checkstyle.out" value="reports/checkstyle-result.xml"/>
 
-    <path id="checkstyle.classpath">
-        <pathelement location="${checkstyle.home}/antlr-2.7.7.jar"/>
-        <pathelement location="${checkstyle.home}/checkstyle-5.6-all.jar"/>
-        <pathelement location="${checkstyle.home}/checkstyle-5.6.jar"/>
-        <pathelement location="${checkstyle.home}/commons-beanutils-core-1.8.3.jar"/>
-        <pathelement location="${checkstyle.home}/commons-cli-1.2.jar"/>
-        <pathelement location="${checkstyle.home}/commons-logging-1.1.1.jar"/>
-        <pathelement location="${checkstyle.home}/google-collections-1.0.jar"/>
-    </path>
-
     <target name="checkstyle">
         <taskdef resource="checkstyletask.properties">
-            <classpath refid="checkstyle.classpath"/>
+            <classpath path="${checkstyle.home}/checkstyle-5.6-all.jar"/>
         </taskdef>
 
         <checkstyle config="${checkstyle.home}/sun_checks.xml"
@@ -113,16 +104,13 @@
 
     <!-- FindBugs -->
 
+
     <property name="findbugs.home" value="/opt/COTS/defaults/findbugs"/>
     <property name="findbugs.out" value="reports/findbugs-result.xml"/>
 
-    <path id="findbugs.classpath">
-        <pathelement location="${findbugs.home}/lib/findbugs-ant.jar"/>
-    </path>
-
     <target name="findbugs">
         <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
-            <classpath refid="findbugs.classpath"/>
+            <classpath path="${findbugs.home}/lib/findbugs-ant.jar"/>
         </taskdef>
 
         <findbugs home="${findbugs.home}"
@@ -134,11 +122,52 @@
         </findbugs>
     </target>
 
+
+    <!-- PMD -->
+
+
+    <property name="pmd.home" value="/opt/COTS/defaults/pmd"/>
+    <property name="pmd.out" value="reports/pmd-result.xml"/>
+
+    <target name="pmd">
+        <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
+            <classpath path="${pmd.home}/lib/pmd-5.0.0.jar:${pmd.home}/lib/jaxen-1.1.1.jar"/>
+        </taskdef>
+
+        <pmd shortFilenames="false">
+            <ruleset>java-basic</ruleset>
+            <ruleset>java-braces</ruleset>
+            <ruleset>java-clone</ruleset>
+            <ruleset>java-codesize</ruleset>
+            <ruleset>java-coupling</ruleset>
+            <ruleset>java-design</ruleset>
+            <ruleset>java-empty</ruleset>
+            <ruleset>java-finalizers</ruleset>
+            <ruleset>java-imports</ruleset>
+            <ruleset>java-junit</ruleset>
+            <ruleset>java-migrating</ruleset>
+            <ruleset>java-naming</ruleset>
+            <ruleset>java-optimizations</ruleset>
+            <ruleset>java-strictexception</ruleset>
+            <ruleset>java-strings</ruleset>
+            <ruleset>java-sunsecure</ruleset>
+            <ruleset>java-typeresolution</ruleset>
+            <ruleset>java-unnecessary</ruleset>
+            <ruleset>java-unusedcode</ruleset>
+            <formatter type="xml" toFile="${pmd.out}"/>
+            <fileset dir="src">
+                <include name="*.java"/>
+            </fileset>
+        </pmd>
+    </target>
+
+
     <!-- Clean -->
 
 
     <target name="clean-reports">
         <delete file="${checkstyle.out}"/>
         <delete file="${findbugs.out}"/>
+        <delete file="${pmd.out}"/>
     </target>
 </project>
