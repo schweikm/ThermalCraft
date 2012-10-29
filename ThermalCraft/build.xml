@@ -71,4 +71,47 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+    <!--
+                ===============
+                STATIC ANALYSIS
+                ===============
+            -->
+
+    <target name="static-analysis" depends="checkstyle"/>
+
+
+    <!-- Checkstyle -->
+
+    <property name="checkstyle.home" value="/opt/COTS/defaults/checkstyle"/>
+    <property name="checkstyle.out" value="reports/checkstyle-result.xml"/>
+
+    <path id="checkstyle.classpath">
+        <pathelement location="${checkstyle.home}/antlr-2.7.7.jar"/>
+        <pathelement location="${checkstyle.home}/checkstyle-5.6-all.jar"/>
+        <pathelement location="${checkstyle.home}/checkstyle-5.6.jar"/>
+        <pathelement location="${checkstyle.home}/commons-beanutils-core-1.8.3.jar"/>
+        <pathelement location="${checkstyle.home}/commons-cli-1.2.jar"/>
+        <pathelement location="${checkstyle.home}/commons-logging-1.1.1.jar"/>
+        <pathelement location="${checkstyle.home}/google-collections-1.0.jar"/>
+    </path>
+
+    <target name="checkstyle">
+        <taskdef resource="checkstyletask.properties">
+            <classpath refid="checkstyle.classpath"/>
+        </taskdef>
+
+        <checkstyle config="${checkstyle.home}/sun_checks.xml"
+                    failOnViolation="false">
+        <fileset dir="src">
+            <include name="**/*.java"/>
+        </fileset>
+        <formatter type="xml" toFile="${checkstyle.out}"/>
+    </checkstyle>
+    </target>
+
+
+    <target name="clean-reports">
+        <delete file="${checkstyle.out}"/>
+    </target>
 </project>
