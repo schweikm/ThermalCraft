@@ -78,7 +78,7 @@
                 ===============
             -->
 
-    <target name="static-analysis" depends="checkstyle"/>
+    <target name="static-analysis" depends="checkstyle,findbugs"/>
 
 
     <!-- Checkstyle -->
@@ -111,7 +111,34 @@
     </target>
 
 
+    <!-- FindBugs -->
+
+    <property name="findbugs.home" value="/opt/COTS/defaults/findbugs"/>
+    <property name="findbugs.out" value="reports/findbugs-result.xml"/>
+
+    <path id="findbugs.classpath">
+        <pathelement location="${findbugs.home}/lib/findbugs-ant.jar"/>
+    </path>
+
+    <target name="findbugs">
+        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+            <classpath refid="findbugs.classpath"/>
+        </taskdef>
+
+        <findbugs home="${findbugs.home}"
+                  effort="max"
+                  output="xml"
+                  outputFile="${findbugs.out}">
+            <sourcePath path="src"/>
+            <class location="build/classes/thermalcraft"/>
+        </findbugs>
+    </target>
+
+    <!-- Clean -->
+
+
     <target name="clean-reports">
         <delete file="${checkstyle.out}"/>
+        <delete file="${findbugs.out}"/>
     </target>
 </project>
