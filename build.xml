@@ -131,7 +131,7 @@
 
     <target name="pmd">
         <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask">
-            <classpath path="${pmd.home}/lib/pmd-5.0.0.jar:${pmd.home}/lib/jaxen-1.1.1.jar"/>
+            <classpath path="${pmd.home}/lib/pmd-5.0.4.jar:${pmd.home}/lib/jaxen-1.1.1.jar"/>
         </taskdef>
 
         <pmd shortFilenames="false">
@@ -163,6 +163,8 @@
 
 
     <!-- Clean -->
+	<target name="clean"
+            depends="clean-reports"/>
 
 
     <target name="clean-reports">
